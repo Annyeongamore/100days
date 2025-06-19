@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our 100 Days – To My Love, Dong Geun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; font-family:'Quicksand'; background:linear-gradient(to bottom,#ffe4ec,#fff0f5); overflow:hidden; }
+    .container { max-width:700px;margin:100px auto;padding:20px;background:white;border-radius:20px;box-shadow:0 0 15px rgba(0,0,0,0.1);text-align:center;position:relative;overflow:hidden; }
+    h1 { font-size:2.5em;color:#ff5b99; }
+    .counter { font-size:1.2em;color:#666;margin:20px 0; }
+    .letter { text-align:left; white-space:pre-wrap; background:#fff9fc; padding:20px; border-radius:15px; box-shadow: inset 0 0 10px #ffe6f0; }
+    .audio-btn { margin:20px 0; }
+    .card-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:#ffdeec;display:flex;justify-content:center;align-items:center;z-index:999;flex-direction:column;transition:opacity 1s ease; }
+    .card-overlay h2 { font-size:2em;color:#ff4d88;margin-bottom:20px; }
+    .card-overlay button { padding:10px 20px;font-size:1em;background:#ff6fa5;color:white;border:none;border-radius:10px;cursor:pointer;transition:background 0.3s; }
+    .card-overlay button:hover { background:#ff5b99; }
+    .sparkle { position:absolute; width:10px; height:10px; background:rgba(255,75,150,0.8); border-radius:50%; animation:float 5s infinite ease-in; mix-blend-mode:screen; }
+    @keyframes float {
+      0% { opacity:1; transform:translate(0,0) scale(1); }
+      100% { opacity:0; transform:translate(0,-400px) scale(2); }
+    }
+  </style>
+</head>
+<body>
+<div class="card-overlay" id="overlay">
+  <h2>Click to open the card 💌</h2>
+  <button onclick="openCard()">Open</button>
+</div>
+<div class="container" id="card" style="display:none;">
+  <h1>Our 100 Days 💖</h1>
+  <div class="counter">Together for <span id="daysTogether"></span> days</div>
+
+  <div class="audio-btn">
+    <audio controls>
+      <source src="voice-message.mp3" type="audio/mp3">
+      Your browser doesn’t support audio.
+    </audio>
+  </div>
+
+  <div class="letter">
+    <p>💌 English and Korean letter will be inserted here.</p>
+  </div>
+</div>
+
+<script>
+  function openCard() {
+    document.getElementById("overlay").style.opacity = 0;
+    setTimeout(() => { overlay.style.display='none'; card.style.display='block'; startSparkles(); }, 1000);
+    playMusic();
+  }
+
+  function calculateDays() {
+    const start=new Date('2025-03-13');
+    const diff=Math.floor((new Date() - start)/(1000*60*60*24));
+    document.getElementById("daysTogether").textContent=diff;
+  }
+  calculateDays();
+
+  let bgAudio;
+  function playMusic() {
+    if (!bgAudio) {
+      bgAudio = document.createElement('audio');
+      bgAudio.src = 'Blue-YoungK.mp3'; // Replace with actual file on host
+      bgAudio.loop = true;
+      bgAudio.volume = 0.5;
+      bgAudio.play().catch(_=>console.log('Play blocked, tap to enable'));
+    }
+  }
+
+  function startSparkles() {
+    const container=document.getElementById('card');
+    for (let i=0; i<30; i++){
+      const s = document.createElement('div');
+      s.className='sparkle';
+      s.style.left=Math.random()*100+'%';
+      s.style.top=Math.random()*100+'%';
+      s.style.animationDelay=(Math.random()*5)+'s';
+      container.appendChild(s);
+    }
+  }
+</script>
+</body>
+</html>
